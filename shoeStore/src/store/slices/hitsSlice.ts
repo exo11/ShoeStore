@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { retryFetchRequest, errorBuilder, loadingBuilder } from '../../utils'
-import { type IHitsState } from '../../model/model'
+import { retryFetchRequest, errorBuilder, loadingBuilder } from '@utils/index'
+import { type IHitsState } from '@model/model'
 
 const initialState: IHitsState = {
   products: [],
@@ -25,8 +25,10 @@ const hitsSlice = createSlice({
     })
     
     builder.addCase(fetchHits.fulfilled, (state, action) => {
-      state.loading = false
-      state.products = action.payload
+      if (action.payload) {
+        state.loading = false
+        state.products = action.payload 
+      }
     })
     
     builder.addCase(fetchHits.rejected, (state, action) => {

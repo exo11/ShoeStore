@@ -1,13 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { useEffect } from 'react'
-import useFetchCatalog from '../../hooks/useFetchCatalog'
-import { addCategory, addOffsetSum, fetchCatalog } from '../../store/slices/catalogSlice'
-import type { RootState, AppDispatch } from '../../store/store'
-import Categories from './Categories'
-import Products from './Products'
-import Preloader from './Preloader'
-import Search from '../general/Search'
-import Modal from '../general/Modal'
+import { useEffect, useCallback } from 'react'
+import useFetchCatalog from '@hooks/useFetchCatalog'
+import { addCategory, addOffsetSum, fetchCatalog } from '@store/slices/catalogSlice'
+import type { RootState, AppDispatch } from '@store/store'
+import Categories from '@components/main/Categories'
+import Products from '@components/main/Products'
+import Preloader from '@components/main/Preloader'
+import Search from '@components/general/Search'
+import Modal from '@components/general/Modal'
 
 function Catalog({withSearch}: {withSearch?: boolean}) {
 
@@ -18,22 +18,22 @@ function Catalog({withSearch}: {withSearch?: boolean}) {
  
   const dispatch = useDispatch<AppDispatch>()
   
-  useEffect(() => {dispatch(fetchCatalog('categories'))}, [dispatch])
+  useEffect(() => {dispatch(fetchCatalog({args: 'categories'}))}, [dispatch])
   
   const url = useFetchCatalog({category, search, offsetSum, categories})
 
-  const onCategory = (evt: React.MouseEvent) => {
+  const onCategory = useCallback((evt: React.MouseEvent) => {
     const id = (evt.target as HTMLButtonElement).dataset.id
     dispatch(addCategory(Number(id)))
-  }
+  }, [dispatch])
 
   const onOffset = () => dispatch(addOffsetSum(offsetSum + offset))
-
+  
   const onReload = () => {
     if (error) {
       const {type} = error
       const urlEnded = type === 'categories' ? type : url
-      dispatch(fetchCatalog(urlEnded))
+      dispatch(fetchCatalog({args: urlEnded}))
     }
   }
 
@@ -55,21 +55,23 @@ function Catalog({withSearch}: {withSearch?: boolean}) {
 
   const catalog = (
     <>
-      {withSearch ? <Search searchValue={searchValue} cls={'catalog'}/> : null}
       <Categories {...categoryObj} onCategory={onCategory}/>
-      {search && !products[0] ? notFound : catalogProducts}
+      {search && !products.length ? notFound : catalogProducts}
     </>
   )
 
   const modal = (
-    <Modal content={`Ошибка ${error?.status}`}>
-      <button onClick={onReload} className="btn">Попробовать еще раз</button>
+    <Modal content={<h3>{error?.status}</h3>}>
+      <button onClick={onReload} className="btn">
+        <span>Попробовать еще раз</span>
+      </button>
     </Modal>
   )
 
   return (
     <section className="catalog">
       <h2 className="text-center">Каталог</h2>
+      {withSearch ? <Search searchValue={searchValue} cls={'catalog'}/> : null}
       {loading ? <Preloader /> : categories[0] ? catalog : null}
       {error && modal}
     </section>

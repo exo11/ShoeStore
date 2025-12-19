@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { type ICatalogState } from '../../model/model'
-import { fetchRequest, errorBuilder, loadingBuilder } from '../../utils'
+import { retryFetchRequest, errorBuilder, loadingBuilder } from '@utils/index'
+import { type ICatalogState } from '@model/model'
 
 const initialState: ICatalogState = {
   categoryObj: {categories: [], category: 0, categoryEnd: false},
@@ -16,7 +16,7 @@ const addLastId = (arr: {id: number}[]) => arr[arr.length - 1]?.id
 
 export const fetchCatalog = createAsyncThunk(
   'catalog/fetchCatalog', 
-  fetchRequest
+  retryFetchRequest
 )
 
 const catalogSlice = createSlice({
@@ -52,27 +52,29 @@ const catalogSlice = createSlice({
     })
     
     builder.addCase(fetchCatalog.fulfilled, (state, action) => {
-      const data = action.payload
-      const {offset} = state.offsetObj
-      const {arg} = action.meta
-      
-      if (arg === 'categories') {
+      if (action.payload) {
+        const data = action.payload
+        const {offset} = state.offsetObj
+        const {args} = action.meta.arg
         
-        state.categoryObj.categories = [{id: 0, title: 'Все'}, ...data]
-      
-      } else if (arg.includes('offset=')) {
+        if (args === 'categories') {
+          
+          state.categoryObj.categories = [{id: 0, title: 'Все'}, ...data]
         
-        const equal = addLastId(state.products) === addLastId(data)
-        state.products = !equal ? [...state.products, ...data] : state.products
-      
-      } else {
+        } else if (args.includes('offset=')) {
+          
+          const equal = addLastId(state.products) === addLastId(data)
+          state.products = !equal ? [...state.products, ...data] : state.products
         
-        state.products = data
-      
+        } else {
+          
+          state.products = data
+        
+        }
+        
+        state.categoryObj.categoryEnd = data.length < offset
+        state.loading = false
       }
-      
-      state.categoryObj.categoryEnd = data.length < offset
-      state.loading = false
     })
     
     builder.addCase(fetchCatalog.rejected, (state, action) => {

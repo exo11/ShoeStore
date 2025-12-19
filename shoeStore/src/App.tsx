@@ -1,13 +1,14 @@
 import './App.css'
 import { Routes, Route } from 'react-router'
-import LayoutPage from './pages/LayoutPage'
-import HomePage from './pages/HomePage'
-import CatalogPage from './pages/CatalogPage'
-import ProductCardPage from './pages/ProductCardPage'
-import AboutPage from './pages/AboutPage'
-import ContactsPage from './pages/ContactsPage'
-import CartPage from './pages/CartPage'
-import NotFoundPage from './pages/NotFoundPage'
+import { lazy } from 'react'
+import LayoutPage from '@pages/LayoutPage'
+const HomePage = lazy(() => import('@pages/HomePage'))
+const CatalogPage = lazy(() => import('@pages/CatalogPage'))
+const ProductCardPage = lazy(() => import('@pages/ProductCardPage'))
+const AboutPage = lazy(() => import('@pages/AboutPage'))
+const ContactsPage = lazy(() => import('@pages/ContactsPage'))
+const CartPage = lazy(() => import('@pages/CartPage'))
+import NotFoundPage from '@pages/NotFoundPage'
 
 function App() {
 

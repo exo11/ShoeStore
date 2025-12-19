@@ -1,23 +1,23 @@
+import { memo } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
-import type { AppDispatch } from '../../store/store'
-import { addSearchValue, addSearch } from '../../store/slices/catalogSlice'
+import useDebounce from '@hooks/useDebounce'
+import type { AppDispatch } from '@store/store'
+import { addSearchValue, addSearch } from '@store/slices/catalogSlice'
+import type { SearchProps } from '@model/model'
 
-interface SearchProps {
-  searchValue: string, 
-  cls: string, 
-  id?: string
-}
-
-function Search({searchValue, cls, id} : SearchProps) {
+const Search = memo(function Search({searchValue, cls, id} : SearchProps) {
   
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
-
+  
+  const debounceAddSearch = (q: string) => dispatch(addSearch(q))
+  const debounceDispatch = useDebounce(debounceAddSearch, 500)
+  
   const onChange = (evt: React.FormEvent) => {
     const {value} = evt.target as HTMLFormElement
     dispatch(addSearchValue(value))
-    if (!value) dispatch(addSearch(value))
+    debounceDispatch(value)
   }
 
   const onSubmit = (evt: React.FormEvent) => {
@@ -38,6 +38,6 @@ function Search({searchValue, cls, id} : SearchProps) {
     </form>
   )
 
-}
+})
 
 export default Search

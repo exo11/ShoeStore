@@ -1,9 +1,4 @@
-import type { ISize } from '../../../model/model'
-
-interface ProductCardSizesProps {
-  sizes: ISize[], 
-  onChange: (evt: React.FormEvent) => void
-}
+import type { ISize, ProductCardSizesProps } from '@model/model'
 
 function ProductCardSizes({sizes, onChange} : ProductCardSizesProps) {
 

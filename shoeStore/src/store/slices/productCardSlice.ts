@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { fetchRequest, errorBuilder, loadingBuilder } from '../../utils'
-import type { IProductCardState } from '../../model/model'
+import { retryFetchProductCard, errorBuilder, loadingBuilder } from '@utils/index'
+import type { IProductCardState } from '@model/model'
 
 const product = {
   id: 0,
@@ -24,7 +24,7 @@ const initialState: IProductCardState = {
 
 export const fetchProductCard = createAsyncThunk(
   'productCard/fetchProductCard', 
-  fetchRequest
+  retryFetchProductCard
 )
 
 const productCardSlice = createSlice({
@@ -39,8 +39,10 @@ const productCardSlice = createSlice({
     })
     
     builder.addCase(fetchProductCard.fulfilled, (state, action) => {
-      state.product = action.payload
-      state.loading = false
+      if (action.payload) {
+        state.product = action.payload
+        state.loading = false
+      }
     })
     
     builder.addCase(fetchProductCard.rejected, (state, action) => {

@@ -1,7 +1,5 @@
 import { Link } from 'react-router'
-import { type IProducts } from '../../model/model'
-
-interface ProductsProps {products: IProducts[], children?: React.ReactNode}
+import type { IProducts, ProductsProps } from '@model/model'
 
 function Products({products, children}: ProductsProps) {
   

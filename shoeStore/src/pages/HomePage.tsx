@@ -1,5 +1,5 @@
-import TopSales from '../components/main/TopSales'
-import Catalog from '../components/main/Catalog'
+import TopSales from '@components/main/TopSales'
+import Catalog from '@components/main/Catalog'
 
 function HomePage() {
   

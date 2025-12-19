@@ -1,11 +1,11 @@
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
-import { useState } from 'react'
-import { addItem } from '../../../store/slices/cartSlice'
-import type { AppDispatch } from '../../../store/store'
-import type { IProduct } from '../../../model/model'
-import ProductCardSizes from './ProductCardSizes'
-import ProductCardCount from './ProductCardCount'
+import { useState, useCallback } from 'react'
+import { addItem } from '@store/slices/cartSlice'
+import type { AppDispatch } from '@store/store'
+import type { IProduct } from '@model/model'
+import ProductCardSizes from '@components/main/productCard/ProductCardSizes'
+import ProductCardCount from '@components/main/productCard/ProductCardCount'
 
 function ProductCardForm(product: IProduct) {
 
@@ -35,10 +35,10 @@ function ProductCardForm(product: IProduct) {
   
   }
 
-  const onChange = (evt: React.FormEvent) => {
+  const onChange = useCallback((evt: React.FormEvent) => {
     const {checked} = evt.target as HTMLInputElement
     setValid(checked)
-  }
+  }, [])
 
   const form = (
     <form onSubmit={onSubmit}>

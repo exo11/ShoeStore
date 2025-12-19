@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchHits } from '../../store/slices/hitsSlice'
-import type { AppDispatch, RootState } from '../../store/store'
-import Preloader from '../../components/main/Preloader'
-import Products from './Products'
+import { fetchHits } from '@store/slices/hitsSlice'
+import type { AppDispatch, RootState } from '@store/store'
+import Preloader from '@components/main/Preloader'
+import Products from '@components/main/Products'
 
 function TopSales() {
 
@@ -11,7 +11,7 @@ function TopSales() {
   const dispatch = useDispatch<AppDispatch>()
  
   useEffect(() => {
-    dispatch(fetchHits({urlEnded: 'top-sales', ms: 5000, times: 5}))
+    dispatch(fetchHits({args: 'top-sales', network: false}))
   }, [dispatch])
 
   const topSales = (
@@ -22,7 +22,7 @@ function TopSales() {
   )
 
   return (
-    <>{products[0] ? topSales : null}</>
+    <>{products.length ? topSales : null}</>
   )
 
 }

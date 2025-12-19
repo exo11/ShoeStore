@@ -49,16 +49,32 @@ export interface IOffsetObj {
   offset: number
 }
 
-export interface IPostRequest {
+export interface IOrder {
   owner: {phone: string, address: string},
   items: ICartItem[]
+}
+
+export interface IChanges {
+  absent: ICartItem[]
+  price: ICartItem[]
+}
+
+export interface IError {
+  type: string | null, 
+  status: string
+}
+
+export interface IOrderRTR { 
+  changes: IChanges | null, 
+  actual: ICartItem[], 
+  success: boolean 
 }
 
 // SLICES STATE
 
 export interface IState {
   loading: boolean,
-  error?: {type: string, status: string} | null
+  error?: IError | null
 }
 
 export interface IHitsState extends IState {
@@ -78,5 +94,69 @@ export interface IProductCardState extends IState {
 
 export interface ICartState extends IState {
   items: ICartItem[],
+  changes: IChanges | null,
   success: boolean
+}
+
+export interface IOrderState extends IState {
+  success: boolean
+}
+
+// COMPONENTS PROPS
+
+export interface SearchProps {
+  searchValue: string, 
+  cls: string, 
+  id?: string
+}
+
+export interface ModalProps {
+  type?: 'CUSTOM' | 'INFO'
+  content?: string | React.ReactNode
+  children?: React.ReactNode
+}
+
+export interface CartTableProps {
+  items: ICartItem[], 
+  onRemove: (evt: React.MouseEvent) => void
+}
+
+export interface CartItemProps {
+  item: ICartItem, 
+  index: number,
+  value: string
+  onRemove: (evt: React.MouseEvent) => void
+}
+
+export interface CartTableLayoutProps {
+  items: ICartItem[],
+  children: React.ReactNode
+}
+
+export interface ProductCardSizesProps {
+  sizes: ISize[], 
+  onChange: (evt: React.FormEvent) => void
+}
+
+export interface CategoriesProps {
+  categories: ICategories[], 
+  category: number,
+  onCategory: (evt: React.MouseEvent) => void
+}
+
+export interface ProductsProps {
+  products: IProducts[], 
+  children?: React.ReactNode
+}
+
+export interface UFCProps {
+  category: number, 
+  search: string, 
+  offsetSum: number, 
+  categories: ICategories[]
+}
+
+export interface ProductCardErrorProps {
+  status: string, 
+  id: string | undefined
 }

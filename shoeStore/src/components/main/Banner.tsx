@@ -1,4 +1,4 @@
-import bannerJpg from '../../img/banner.jpg'
+import bannerJpg from '@img/banner.jpg'
 
 function Banner() {
 

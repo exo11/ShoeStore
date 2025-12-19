@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { useSelector } from 'react-redux'
-import type { RootState } from '../../store/store'
-import Search from '../general/Search'
+import type { RootState } from '@store/store'
+import Search from '@components/general/Search'
 
 function HeaderControls() {
    

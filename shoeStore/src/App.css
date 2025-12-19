@@ -364,7 +364,8 @@ main {
   flex-direction: column;
   justify-content: end;
   background-color: white;
-  width: 500px;
+  min-width: 500px;
+  width: fit-content;
   height: fit-content;
   border-radius: 10px;
 }

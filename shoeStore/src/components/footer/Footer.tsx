@@ -1,7 +1,7 @@
-import FooterInfo from './FooterInfo'
-import FooterPay from './FooterPay'
-import FooterCopyright from './FooterCopyright'
-import FooterContacts from './FooterContacts'
+import FooterInfo from '@components/footer/FooterInfo'
+import FooterPay from '@components/footer/FooterPay'
+import FooterCopyright from '@components/footer/FooterCopyright'
+import FooterContacts from '@components/footer/FooterContacts'
 
 function Footer() {
 

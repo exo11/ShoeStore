@@ -1,9 +1,13 @@
-import { Outlet } from 'react-router'
-import Header from '../components/header/Header'
-import Footer from '../components/footer/Footer'
-import Banner from '../components/main/Banner'
+import { Suspense } from 'react'
+import { Outlet, useLocation } from 'react-router'
+import Header from '@components/header/Header'
+import Footer from '@components/footer/Footer'
+import Banner from '@components/main/Banner'
+import Preloader from '@components/main/Preloader'
 
 function LayoutPage() {
+
+  const location = useLocation()
 
   return (
     <>
@@ -12,7 +16,9 @@ function LayoutPage() {
         <div className="row">
           <div className="col">
             <Banner />
-            <Outlet/>
+            <Suspense key={location.pathname} fallback={<Preloader />}>
+              <Outlet/>
+            </Suspense>
           </div>
         </div>
       </main>

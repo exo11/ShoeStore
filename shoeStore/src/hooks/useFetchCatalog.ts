@@ -1,16 +1,9 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { fetchCatalog } from '../store/slices/catalogSlice'
-import { urlEnded } from '../utils'
-import type { AppDispatch } from '../store/store'
-import type { ICategories } from '../model/model'
-
-interface UFCProps {
-  category: number, 
-  search: string, 
-  offsetSum: number, 
-  categories: ICategories[]
-}
+import { fetchCatalog } from '@store/slices/catalogSlice'
+import { urlEnded } from '@utils/index'
+import type { AppDispatch } from '@store/store'
+import type { UFCProps } from '@model/model'
 
 function useFetchCatalog(obj: UFCProps) {
 
@@ -19,7 +12,7 @@ function useFetchCatalog(obj: UFCProps) {
   const url = urlEnded(obj)
 
   useEffect(() => {
-    if (categories[0]) {dispatch(fetchCatalog(url))}
+    if (categories.length) {dispatch(fetchCatalog({args: url}))}
   }, [dispatch, url, categories])
 
   return url

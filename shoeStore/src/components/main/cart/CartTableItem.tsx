@@ -1,12 +1,5 @@
 import { Link } from 'react-router'
-import type { ICartItem } from '../../../model/model'
-
-interface CartItemProps {
-  item: ICartItem, 
-  index: number,
-  value: string
-  onRemove: (evt: React.MouseEvent) => void
-}
+import type { CartItemProps } from '@model/model'
 
 function CartTableItem({item, index, value, onRemove}: CartItemProps) {
   

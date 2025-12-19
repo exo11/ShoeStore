@@ -1,12 +1,12 @@
 import { useParams } from 'react-router'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchProductCard } from '../../../store/slices/productCardSlice'
-import type { AppDispatch, RootState } from '../../../store/store'
-import ProductCardDesc from './ProductCardDesc'
-import ProductCardForm from './ProductCardForm'
-import Preloader from '../../main/Preloader'
-import Modal from '../../general/Modal'
+import { fetchProductCard } from '@store/slices/productCardSlice'
+import type { AppDispatch, RootState } from '@store/store'
+import ProductCardDesc from '@components/main/productCard/ProductCardDesc'
+import ProductCardForm from '@components/main/productCard/ProductCardForm'
+import ProductCardError from '@components/main/productCard/ProductCardError'
+import Preloader from '@components/main/Preloader'
 
 function ProductCard() {
   
@@ -14,11 +14,11 @@ function ProductCard() {
   const dispatch = useDispatch<AppDispatch>()
   const {id} = useParams()
   
-  useEffect(() => {dispatch(fetchProductCard(`items/${id}`))}, [dispatch, id])
+  useEffect(() => {dispatch(fetchProductCard({args: `items/${id}`}))}, [dispatch, id])
 
   const {product, loading, error} = store
   const {title, images} = product
-  
+ 
   const сard = (
     <section className="catalog-item">
       <h2 className="text-center">{title}</h2>
@@ -34,20 +34,9 @@ function ProductCard() {
     </section>
   )
 
-  const modal = (
-    <Modal content={`Ошибка ${error?.status}`}>
-      <button 
-        onClick={() => dispatch(fetchProductCard(`items/${id}`))}
-        className="btn"
-      >
-        Попробовать еще раз
-      </button>
-    </Modal>
-  )
-
   return (
     <>
-      {loading ? <Preloader /> : error ? modal : сard}
+      {loading ? <Preloader /> : error ? <ProductCardError status={error.status} id={id} /> : сard}
     </>
   )
 

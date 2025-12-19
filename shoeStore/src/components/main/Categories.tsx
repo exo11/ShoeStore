@@ -1,12 +1,6 @@
-import type { ICategories } from '../../model/model'
+import type { ICategories, CategoriesProps } from '@model/model'
 
-interface ICategoriesProps {
-  categories: ICategories[], 
-  category: number,
-  onCategory: (evt: React.MouseEvent) => void
-}
-
-function Categories({categories, category, onCategory}: ICategoriesProps) {
+const Categories = function Categories({categories, category, onCategory}: CategoriesProps) {
 
   const addCategories = (arr: ICategories[]) => arr.map(({id, title}) => {
     const active = category === id ? 'active' : ''

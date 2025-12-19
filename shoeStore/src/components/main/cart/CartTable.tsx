@@ -1,11 +1,6 @@
-import type { ICartItem } from '../../../model/model'
-import CartTableItem from './CartTableItem'
-import CartTableLayout from './CartTableLayout'
-
-interface CartTableProps {
-  items: ICartItem[], 
-  onRemove: (evt: React.MouseEvent) => void
-}
+import CartTableItem from '@components/main/cart/CartTableItem'
+import CartTableLayout from '@components/main/cart/CartTableLayout'
+import type { ICartItem, CartTableProps } from '@model/model'
 
 function CartTable({items, onRemove}: CartTableProps) {
   

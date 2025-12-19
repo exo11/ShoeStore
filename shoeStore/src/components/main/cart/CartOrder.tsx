@@ -1,4 +1,6 @@
-function CartOrder({onSubmit}: {onSubmit: (evt: React.FormEvent) => void}) {
+import { memo } from "react"
+
+const CartOrder = memo(function CartOrder({onSubmit}: {onSubmit: (evt: React.FormEvent) => void}) {
 
   return (
     <section className="order">
@@ -54,6 +56,6 @@ function CartOrder({onSubmit}: {onSubmit: (evt: React.FormEvent) => void}) {
     </section>
   )
 
-}
+})
 
 export default CartOrder

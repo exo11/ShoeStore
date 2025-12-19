@@ -1,7 +1,7 @@
 import { Link } from 'react-router'
-import logoPng from '../../img/header-logo.png'
-import HeaderList from './HeaderList'
-import HeaderControls from './HeaderControls'
+import logoPng from '@img/header-logo.png'
+import HeaderList from '@components/header/HeaderList'
+import HeaderControls from '@components/header/HeaderControls'
 
 function HeaderNav() {
 

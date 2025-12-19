@@ -1,4 +1,4 @@
-import type { IProduct } from '../../../model/model'
+import type { IProduct } from '@model/model'
 
 function ProductCardDesc(product: IProduct) {
 

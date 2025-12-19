@@ -22,7 +22,19 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Custom */
+    "baseUrl": "./src", 
+    "paths": {
+      "@components/*": ["components/*"],
+      "@hooks/*": ["hooks/*"],
+      "@img/*": ["img/*"],
+      "@model/*": ["model/*"],
+      "@pages/*": ["pages/*"],
+      "@store/*": ["store/*"],
+      "@utils/*": ["utils/*"]
+    }
   },
   "include": ["src"]
 }

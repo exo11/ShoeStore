@@ -1,12 +1,6 @@
-import type { ICartItem } from '../../../model/model'
-
-interface CartTableLayoutProps {
-  items: ICartItem[],
-  children: React.ReactNode
-}
+import type { ICartItem, CartTableLayoutProps } from '@model/model'
 
 function CartTableLayout({items, children}: CartTableLayoutProps) {
-
   const totalAmount = (arr: ICartItem[]) => { 
     return arr.reduce((sum, {price, count}) => sum + (price * count), 0)
   }

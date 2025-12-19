@@ -1,4 +1,4 @@
-import Catalog from '../components/main/Catalog'
+import Catalog from '@components/main/Catalog'
 
 function CatalogPage() {
 

@@ -1,4 +1,4 @@
-import ProductCard from "../components/main/productCard/ProductCard"
+import ProductCard from "@components/main/productCard/ProductCard"
 
 function ProductCardPage() {
 

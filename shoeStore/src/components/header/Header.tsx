@@ -1,4 +1,4 @@
-import HeaderNav from './HeaderNav'
+import HeaderNav from '@components/header/HeaderNav'
 
 function Header() {
 

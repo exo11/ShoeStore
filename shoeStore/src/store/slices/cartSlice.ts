@@ -1,23 +1,21 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { fetchPostRequest, errorBuilder, loadingBuilder } from '../../utils'
-import type { ICartState, ICartItem } from '../../model/model'
+import { retryFetchOrder, saveItems } from '@utils/index'
+import { errorBuilder, loadingBuilder } from '@utils/index'
+import type { ICartState } from '@model/model'
 
 const storage = localStorage.getItem('cart')
 
-const saveItems = (items: ICartItem[]) => {
-  localStorage.setItem('cart', JSON.stringify(items))
-}
-
 const initialState: ICartState = {
   items: storage ? JSON.parse(storage) : [],
+  changes: null,
   success: false,
   loading: false,
   error: null
 }
 
-export const fetchOrder = createAsyncThunk(
-  'cart/fetchOrder', 
-  fetchPostRequest
+export const fetchCart = createAsyncThunk(
+  'cart/fetchCart', 
+  retryFetchOrder
 )
 
 const cartSlice = createSlice({
@@ -55,28 +53,28 @@ const cartSlice = createSlice({
   
   extraReducers: (builder) => {
     
-    builder.addCase(fetchOrder.pending, (state) => {
+    builder.addCase(fetchCart.pending, (state) => {
       loadingBuilder(state)
     })
     
-    builder.addCase(fetchOrder.fulfilled, (state, action) => {
-      state.loading = false
-      state.success = action.payload
-      state.items = []
-      saveItems(state.items)
+    builder.addCase(fetchCart.fulfilled, (state, action) => {
+      if (action.payload) {
+        const {actual, changes, success} = action.payload
+        state.items = success ? [] : actual
+        state.changes = changes
+        state.success = success
+        state.loading = false
+        saveItems(state.items)
+      }
     })
     
-    builder.addCase(fetchOrder.rejected, (state, action) => {
+    builder.addCase(fetchCart.rejected, (state, action) => {
       errorBuilder(state, action)
     })
-  
+
   }
+
 })
 
-export const { 
-  addItem, 
-  removeItem, 
-  cleanError 
-} = cartSlice.actions
-
+export const { addItem, removeItem, cleanError } = cartSlice.actions
 export default cartSlice.reducer
